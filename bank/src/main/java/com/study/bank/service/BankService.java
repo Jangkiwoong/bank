@@ -1,6 +1,6 @@
 package com.study.bank.service;
 import com.study.bank.common.Message;
-import com.study.bank.dto.BankRequestDto;
+import com.study.bank.dto.UserRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
 import com.study.bank.dto.SendRequestDto;
 import com.study.bank.dto.WithdrawalsRequestDto;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BankService {
     //유저 정보 생성
-    public ResponseEntity<Message> addUser(BankRequestDto bankRequestDto) {
+    public ResponseEntity<Message> addUser(UserRequestDto bankRequestDto) {
         return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
     }
     //계좌조회

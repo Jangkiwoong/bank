@@ -1,7 +1,7 @@
 package com.study.bank.controller;
 
 import com.study.bank.common.Message;
-import com.study.bank.dto.BankRequestDto;
+import com.study.bank.dto.UserRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
 import com.study.bank.dto.SendRequestDto;
 import com.study.bank.dto.WithdrawalsRequestDto;
@@ -18,7 +18,7 @@ public class BankController {
     private final BankService bankService;
     //유저 정보 생성
     @PostMapping("/add/user")
-    public ResponseEntity<Message> addUser (@RequestBody BankRequestDto bankRequestDto) {
+    public ResponseEntity<Message> addUser (@RequestBody UserRequestDto bankRequestDto) {
         return bankService.addUser(bankRequestDto);
     }
     //계좌 조회
