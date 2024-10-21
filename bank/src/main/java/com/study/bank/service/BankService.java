@@ -21,11 +21,14 @@ public class BankService {
     public ResponseEntity<Message> addAccount(UserRequestDto bankRequestDto) {
         Bank bank = new Bank(bankRequestDto);
         bankRepository.save(bank);
-        return new ResponseEntity<>(new Message("계좌가 생성되었습니다", null), HttpStatus.OK);
+        return new ResponseEntity<>(new Message("계좌가 생성되었습니다.", null), HttpStatus.OK);
     }
     //계좌조회
-    public ResponseEntity<Message> getAccounts() {
-        return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
+    public ResponseEntity<Message> getAccounts(Long id) {
+        Bank bank = bankRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
+        );
+        return new ResponseEntity<>(new Message("계좌를 찾았습니다.", bank), HttpStatus.OK);
     }
     //계좌이체
     public ResponseEntity<Message> sendMoney(SendRequestDto sendRequestDto) {

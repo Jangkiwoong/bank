@@ -23,8 +23,8 @@ public class BankController {
     }
     //계좌 조회
     @GetMapping("/get/accounts")
-    public ResponseEntity<Message> getAccounts () {
-        return bankService.getAccounts();
+    public ResponseEntity<Message> getAccounts (@RequestParam Long id) {
+        return bankService.getAccounts(id);
     }
     //계좌 이체
     @PutMapping("/update/send/money")
