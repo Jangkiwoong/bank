@@ -1,6 +1,7 @@
 package com.study.bank.entity;
 
 import com.study.bank.dto.AccountRequestDto;
+import com.study.bank.dto.DepositsRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Bank {
         this.money = bankRequestDto.getMoney();
     }
     //계좌이체(내 계좌)
-    public void setMyMoney(Long transferMoney) {
+    public void transferMyMoney(Long transferMoney) {
         if (transferMoney <= 0) {
             throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
         }
@@ -42,10 +43,17 @@ public class Bank {
         this.money -= transferMoney;
     }
     //계좌이체(상대 계좌)
-    public void setRelativeAccount(Long transferMoney) {
+    public void transferRelativeAccount(Long transferMoney) {
         if (transferMoney <= 0) {
             throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
         }
         this.money += transferMoney;
+    }
+    //입금
+    public void depositsMoney(DepositsRequestDto depositsRequestDto) {
+        if(depositsRequestDto.getDepositsMoney() <= 0) {
+            throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
+        }
+        this.money += depositsRequestDto.getDepositsMoney();
     }
 }

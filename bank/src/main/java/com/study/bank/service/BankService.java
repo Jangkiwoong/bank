@@ -2,7 +2,7 @@ package com.study.bank.service;
 import com.study.bank.common.Message;
 import com.study.bank.dto.AccountRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
-import com.study.bank.dto.SendRequestDto;
+import com.study.bank.dto.TransferRequestDto;
 import com.study.bank.dto.WithdrawalsRequestDto;
 import com.study.bank.entity.Bank;
 import com.study.bank.repository.BankRepository;
@@ -31,19 +31,23 @@ public class BankService {
         return new ResponseEntity<>(new Message("계좌를 찾았습니다.", bank), HttpStatus.OK);
     }
     //계좌이체
-    public ResponseEntity<Message> sendMoney(SendRequestDto sendRequestDto) {
-        Bank myAccount = bankRepository.findByAccount(sendRequestDto.getMyAccount()).orElseThrow(
+    public ResponseEntity<Message> transferMoney(TransferRequestDto transferRequestDto) {
+        Bank myAccount = bankRepository.findByAccount(transferRequestDto.getMyAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
         );
-        Bank relativeAccount = bankRepository.findByAccount(sendRequestDto.getRelativeAccount()).orElseThrow(
+        Bank relativeAccount = bankRepository.findByAccount(transferRequestDto.getRelativeAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
         );
-        myAccount.setMyMoney(sendRequestDto.getTransferMoney());
-        relativeAccount.setRelativeAccount(sendRequestDto.getTransferMoney());
+        myAccount.transferMyMoney(transferRequestDto.getTransferMoney());
+        relativeAccount.transferRelativeAccount(transferRequestDto.getTransferMoney());
         return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
     }
     //입금
     public ResponseEntity<Message> depositsMoney(DepositsRequestDto depositsRequestDto) {
+        Bank bank = bankRepository.findByAccount(depositsRequestDto.getAccount()).orElseThrow(
+                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
+        );
+        bank.depositsMoney(depositsRequestDto);
         return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
     }
     //출금

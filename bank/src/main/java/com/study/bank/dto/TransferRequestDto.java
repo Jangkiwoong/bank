@@ -3,7 +3,7 @@ package com.study.bank.dto;
 import lombok.Getter;
 
 @Getter
-public class SendRequestDto {
+public class TransferRequestDto {
     private String myAccount;
     private String relativeAccount;
     private Long transferMoney;

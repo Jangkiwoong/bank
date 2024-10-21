@@ -3,7 +3,7 @@ package com.study.bank.controller;
 import com.study.bank.common.Message;
 import com.study.bank.dto.AccountRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
-import com.study.bank.dto.SendRequestDto;
+import com.study.bank.dto.TransferRequestDto;
 import com.study.bank.dto.WithdrawalsRequestDto;
 import com.study.bank.service.BankService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class BankController {
     }
     //계좌 이체
     @PutMapping("/update/send/money")
-    public ResponseEntity<Message> sendMoney (@RequestBody SendRequestDto sendRequestDto) {
-        return bankService.sendMoney(sendRequestDto);
+    public ResponseEntity<Message> transferMoney (@RequestBody TransferRequestDto transferRequestDto) {
+        return bankService.transferMoney(transferRequestDto);
     }
     //입금
     @PutMapping("/update/deposits/money")
