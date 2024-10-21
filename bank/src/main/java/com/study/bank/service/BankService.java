@@ -55,6 +55,10 @@ public class BankService {
     }
     //출금
     public ResponseEntity<Message> withdrawalsMoney(WithdrawalsRequestDto withdrawalsRequestDto) {
+        Bank bank = bankRepository.findByAccount(withdrawalsRequestDto.getAccount()).orElseThrow(
+                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
+        );
+        bank.withdrawalsMoney(withdrawalsRequestDto);
         return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
     }
 }

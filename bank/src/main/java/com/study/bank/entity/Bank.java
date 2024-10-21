@@ -2,6 +2,7 @@ package com.study.bank.entity;
 
 import com.study.bank.dto.AccountRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
+import com.study.bank.dto.WithdrawalsRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,11 +52,20 @@ public class Bank {
         this.money += transferMoney;
     }
     //입금
-    public Bank depositsMoney(DepositsRequestDto depositsRequestDto) {
+    public void depositsMoney(DepositsRequestDto depositsRequestDto) {
         if(depositsRequestDto.getDepositsMoney() <= 0) {
             throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
         }
         this.money += depositsRequestDto.getDepositsMoney();
-        return null;
+    }
+    //출금
+    public void withdrawalsMoney(WithdrawalsRequestDto withdrawalsRequestDto) {
+        if (withdrawalsRequestDto.getWithdrawalsMoney() <= 0) {
+            throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
+        }
+        if (this.money < withdrawalsRequestDto.getWithdrawalsMoney()) {
+            throw new IllegalStateException("잔액이 부족합니다.");
+        }
+        this.money -= withdrawalsRequestDto.getWithdrawalsMoney();
     }
 }
