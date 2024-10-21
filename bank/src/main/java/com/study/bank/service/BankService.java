@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +19,14 @@ public class BankService {
     private final BankRepository bankRepository;
 
     //계좌 정보 생성
+    @Transactional
     public ResponseEntity<Message> addAccount(AccountRequestDto bankRequestDto) {
         Bank bank = new Bank(bankRequestDto);
         bankRepository.save(bank);
         return new ResponseEntity<>(new Message("계좌가 생성되었습니다.", null), HttpStatus.OK);
     }
     //계좌조회
+    @Transactional
     public ResponseEntity<Message> getAccounts(Long id) {
         Bank bank = bankRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
@@ -31,6 +34,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("계좌를 찾았습니다.", bank), HttpStatus.OK);
     }
     //계좌이체
+    @Transactional
     public ResponseEntity<Message> transferMoney(TransferRequestDto transferRequestDto) {
         Bank myAccount = bankRepository.findByAccount(transferRequestDto.getMyAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
@@ -45,6 +49,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("이체가 완료되었습니다.", myAccount), HttpStatus.OK);
     }
     //입금
+    @Transactional
     public ResponseEntity<Message> depositsMoney(DepositsRequestDto depositsRequestDto) {
         Bank bank = bankRepository.findByAccount(depositsRequestDto.getAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
@@ -54,6 +59,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("입금이 완료 되었습니다.", bank), HttpStatus.OK);
     }
     //출금
+    @Transactional
     public ResponseEntity<Message> withdrawalsMoney(WithdrawalsRequestDto withdrawalsRequestDto) {
         Bank bank = bankRepository.findByAccount(withdrawalsRequestDto.getAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
