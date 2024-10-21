@@ -33,7 +33,7 @@ public class Bank {
         this.money = bankRequestDto.getMoney();
     }
     //계좌이체(내 계좌)
-    public void transferMyMoney(Long transferMoney) {
+    public Bank transferMyMoney(Long transferMoney) {
         if (transferMoney <= 0) {
             throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
         }
@@ -41,6 +41,7 @@ public class Bank {
             throw new IllegalStateException("잔액이 부족합니다.");
         }
         this.money -= transferMoney;
+        return null;
     }
     //계좌이체(상대 계좌)
     public void transferRelativeAccount(Long transferMoney) {
@@ -50,10 +51,11 @@ public class Bank {
         this.money += transferMoney;
     }
     //입금
-    public void depositsMoney(DepositsRequestDto depositsRequestDto) {
+    public Bank depositsMoney(DepositsRequestDto depositsRequestDto) {
         if(depositsRequestDto.getDepositsMoney() <= 0) {
             throw new IllegalArgumentException("이체 금액은 0보다 커야 합니다.");
         }
         this.money += depositsRequestDto.getDepositsMoney();
+        return null;
     }
 }

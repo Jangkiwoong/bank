@@ -40,7 +40,9 @@ public class BankService {
         );
         myAccount.transferMyMoney(transferRequestDto.getTransferMoney());
         relativeAccount.transferRelativeAccount(transferRequestDto.getTransferMoney());
-        return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
+        bankRepository.saveAndFlush(myAccount);
+        bankRepository.saveAndFlush(relativeAccount);
+        return new ResponseEntity<>(new Message("이체가 완료되었습니다.", myAccount), HttpStatus.OK);
     }
     //입금
     public ResponseEntity<Message> depositsMoney(DepositsRequestDto depositsRequestDto) {
@@ -48,7 +50,8 @@ public class BankService {
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
         );
         bank.depositsMoney(depositsRequestDto);
-        return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
+        bankRepository.saveAndFlush(bank);
+        return new ResponseEntity<>(new Message("입금이 완료되었습니다.", bank), HttpStatus.OK);
     }
     //출금
     public ResponseEntity<Message> withdrawalsMoney(WithdrawalsRequestDto withdrawalsRequestDto) {
