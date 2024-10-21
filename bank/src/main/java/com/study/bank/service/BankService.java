@@ -51,7 +51,7 @@ public class BankService {
         );
         bank.depositsMoney(depositsRequestDto);
         bankRepository.saveAndFlush(bank);
-        return new ResponseEntity<>(new Message("입금이 완료되었습니다.", bank), HttpStatus.OK);
+        return new ResponseEntity<>(new Message("입금이 완료 되었습니다.", bank), HttpStatus.OK);
     }
     //출금
     public ResponseEntity<Message> withdrawalsMoney(WithdrawalsRequestDto withdrawalsRequestDto) {
@@ -59,6 +59,6 @@ public class BankService {
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
         );
         bank.withdrawalsMoney(withdrawalsRequestDto);
-        return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
+        return new ResponseEntity<>(new Message("출금이 완료 되었습니다.", null), HttpStatus.OK);
     }
 }
