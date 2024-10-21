@@ -1,5 +1,6 @@
 package com.study.bank.entity;
 
+import com.study.bank.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BankEntity {
+public class Bank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +23,12 @@ public class BankEntity {
     private String accountNumber;
 
     @Column
-    private Integer money;
+    private String money;
+
+    //유저 정보 생성
+    public Bank(UserRequestDto bankRequestDto) {
+        this.userName = bankRequestDto.getUserName();
+        this.accountNumber = bankRequestDto.getAccountNumber();
+        this.money = bankRequestDto.getMoney();
+    }
 }

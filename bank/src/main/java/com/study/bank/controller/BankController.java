@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class BankController {
 
     private final BankService bankService;
-    //유저 정보 생성
-    @PostMapping("/add/user")
-    public ResponseEntity<Message> addUser (@RequestBody UserRequestDto bankRequestDto) {
-        return bankService.addUser(bankRequestDto);
+    //계좌 정보 생성
+    @PostMapping("/add/account")
+    public ResponseEntity<Message> addAccount (@RequestBody UserRequestDto bankRequestDto) {
+        return bankService.addAccount(bankRequestDto);
     }
     //계좌 조회
     @GetMapping("/get/accounts")
