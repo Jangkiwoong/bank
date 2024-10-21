@@ -3,8 +3,8 @@ package com.study.bank.dto;
 import lombok.Getter;
 
 @Getter
-public class UserRequestDto {
+public class AccountRequestDto {
     private String userName;
     private String accountNumber;
-    private String money;
+    private Long money;
 }

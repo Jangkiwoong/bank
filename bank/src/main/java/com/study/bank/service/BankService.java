@@ -1,6 +1,6 @@
 package com.study.bank.service;
 import com.study.bank.common.Message;
-import com.study.bank.dto.UserRequestDto;
+import com.study.bank.dto.AccountRequestDto;
 import com.study.bank.dto.DepositsRequestDto;
 import com.study.bank.dto.SendRequestDto;
 import com.study.bank.dto.WithdrawalsRequestDto;
@@ -18,7 +18,7 @@ public class BankService {
     private final BankRepository bankRepository;
 
     //계좌 정보 생성
-    public ResponseEntity<Message> addAccount(UserRequestDto bankRequestDto) {
+    public ResponseEntity<Message> addAccount(AccountRequestDto bankRequestDto) {
         Bank bank = new Bank(bankRequestDto);
         bankRepository.save(bank);
         return new ResponseEntity<>(new Message("계좌가 생성되었습니다.", null), HttpStatus.OK);
@@ -32,6 +32,14 @@ public class BankService {
     }
     //계좌이체
     public ResponseEntity<Message> sendMoney(SendRequestDto sendRequestDto) {
+        Bank myAccount = bankRepository.findByAccount(sendRequestDto.getMyAccount()).orElseThrow(
+                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
+        );
+        Bank relativeAccount = bankRepository.findByAccount(sendRequestDto.getRelativeAccount()).orElseThrow(
+                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
+        );
+        myAccount.setMyMoney(sendRequestDto.getTransferMoney());
+        relativeAccount.setRelativeAccount(sendRequestDto.getTransferMoney());
         return new ResponseEntity<>(new Message("", null), HttpStatus.OK);
     }
     //입금
