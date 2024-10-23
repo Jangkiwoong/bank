@@ -21,6 +21,10 @@ public class BankController {
     public ResponseEntity<Message> addAccount (@RequestBody AccountRequestDto bankRequestDto) {
         return bankService.addAccount(bankRequestDto);
     }
+    @GetMapping("/get/all/accounts")
+    public ResponseEntity<Message> getAllAccounts () {
+        return bankService.getAllAccounts();
+    }
     //계좌 조회
     @GetMapping("/get/accounts")
     public ResponseEntity<Message> getAccounts (@RequestParam Long id) {
