@@ -30,7 +30,7 @@ public class Bank {
     //유저 정보 생성
     public Bank(AccountRequestDto bankRequestDto) {
         this.userName = bankRequestDto.getUserName();
-        this.account = bankRequestDto.getAccountNumber();
+        this.account = bankRequestDto.getAccount();
         this.money = bankRequestDto.getMoney();
     }
     //계좌이체(내 계좌)
