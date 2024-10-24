@@ -29,7 +29,7 @@ public class BankService {
     }
     //계좌조회
     @Transactional
-    public ResponseEntity<Message> getAccounts(Long id) {
+    public ResponseEntity<Message> getAccount(Long id) {
         Bank bank = bankRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
         );
@@ -70,7 +70,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("출금이 완료 되었습니다.", null), HttpStatus.OK);
     }
     //모든 계좌 조회
-    public ResponseEntity<Message> getAllAccounts() {
+    public ResponseEntity<Message> getAllAccount() {
         List<Bank> bankList = bankRepository.findAll();
         return new ResponseEntity<>(new Message("모든 계좌를 조회 하였습니다.", bankList), HttpStatus.OK);
     }

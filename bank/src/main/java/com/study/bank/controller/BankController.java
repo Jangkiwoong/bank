@@ -21,14 +21,14 @@ public class BankController {
     public ResponseEntity<Message> addAccount (@RequestBody AccountRequestDto bankRequestDto) {
         return bankService.addAccount(bankRequestDto);
     }
-    @GetMapping("/get/all/accounts")
+    @GetMapping("/get/all/account")
     public ResponseEntity<Message> getAllAccounts () {
-        return bankService.getAllAccounts();
+        return bankService.getAllAccount();
     }
     //계좌 조회
-    @GetMapping("/get/accounts")
+    @GetMapping("/get/account")
     public ResponseEntity<Message> getAccounts (@RequestParam Long id) {
-        return bankService.getAccounts(id);
+        return bankService.getAccount(id);
     }
     //계좌 이체
     @PutMapping("/update/send/money")

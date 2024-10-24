@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class AccountRequestDto {
     private String userName;
-    private String accountNumber;
+    private String account;
     private Long money;
 }
