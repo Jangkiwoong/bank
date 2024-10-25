@@ -70,7 +70,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("출금이 완료 되었습니다.", null), HttpStatus.OK);
     }
     //모든 계좌 조회
-    public ResponseEntity<Message> getAllAccount() {
+    public ResponseEntity<Message> getAllAccount () {
         List<Bank> bankList = bankRepository.findAll();
         return new ResponseEntity<>(new Message("모든 계좌를 조회 하였습니다.", bankList), HttpStatus.OK);
     }

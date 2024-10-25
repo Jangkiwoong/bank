@@ -18,7 +18,9 @@ public class BankApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://127.0.0.1:5173");
+                registry.addMapping("/**")
+                        .allowedOrigins("http://127.0.0.1:5173")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE"); // 허용할 HTTP 메서드
             }
         };
     }
