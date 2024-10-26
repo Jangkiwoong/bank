@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,19 +37,30 @@ public class BankService {
         return new ResponseEntity<>(new Message("계좌를 찾았습니다.", bank), HttpStatus.OK);
     }
     //계좌이체
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public ResponseEntity<Message> transferMoney(TransferRequestDto transferRequestDto) {
-        Bank myAccount = bankRepository.findByAccount(transferRequestDto.getMyAccount()).orElseThrow(
-                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
-        );
-        Bank relativeAccount = bankRepository.findByAccount(transferRequestDto.getRelativeAccount()).orElseThrow(
-                () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
-        );
+        Bank myAccount = bankRepository.findByAccount(transferRequestDto.getMyAccount())
+                .orElseThrow(() -> new IllegalArgumentException("계좌를 찾을 수 없습니다."));
+
+        System.out.println("현재 나의 잔고 : " + myAccount.getMoney());
+
+        // 금액을 출금
         myAccount.transferMyMoney(transferRequestDto.getTransferMoney());
-        relativeAccount.transferRelativeAccount(transferRequestDto.getTransferMoney());
-        bankRepository.saveAndFlush(myAccount);
-        bankRepository.saveAndFlush(relativeAccount);
+        bankRepository.save(myAccount); // 여기서 트랜잭션이 열려 있어 커밋되지 않음
+
+        // 'trasferMonet2'를 호출하여 예외 발생
+        trasferMonet2(transferRequestDto); // 트랜잭션이 없으므로 예외 발생
+
         return new ResponseEntity<>(new Message("이체가 완료되었습니다.", myAccount), HttpStatus.OK);
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    public void trasferMonet2(TransferRequestDto transferRequestDto) {
+        Bank relativeAccount = bankRepository.findByAccount(transferRequestDto.getRelativeAccount())
+                .orElseThrow(() -> new IllegalArgumentException("계좌를 찾을 수 없습니다."));
+
+        relativeAccount.transferRelativeAccount(transferRequestDto.getTransferMoney());
+        bankRepository.save(relativeAccount); // 상대방 계좌에 금액을 저장
     }
     //입금
     @Transactional
