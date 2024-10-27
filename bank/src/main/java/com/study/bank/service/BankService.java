@@ -37,7 +37,7 @@ public class BankService {
         return new ResponseEntity<>(new Message("계좌를 찾았습니다.", bank), HttpStatus.OK);
     }
     //계좌이체
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.NEVER)
     public ResponseEntity<Message> transferMoney(TransferRequestDto transferRequestDto) {
         Bank myAccount = bankRepository.findByAccount(transferRequestDto.getMyAccount())
                 .orElseThrow(() -> new IllegalArgumentException("계좌를 찾을 수 없습니다."));
