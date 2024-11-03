@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransferService {
 
     private final BankRepository bankRepository;
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void trasferMoney2(TransferRequestDto transferRequestDto) {
         Bank relativeAccount = bankRepository.findByAccount(transferRequestDto.getRelativeAccount()).orElseThrow(
                 () -> new IllegalArgumentException("계좌를 찾을 수 없습니다.")
